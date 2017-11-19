@@ -7,6 +7,7 @@ BUILD_DIRECTORY = File.join(File.dirname(__FILE__), "build")
 USER_INSTALL_DIRECTORY = File.expand_path('~/.local/share/gnome-shell/extensions')
 SYSTEM_INSTALL_DIRECTORY = '/usr/local/share/gnome-shell/extensions'
 GLIB_SCHEMA_COMPILE_COMMAND = 'glib-compile-schemas'
+SOURCE_DIRECTORY=File.dirname(__FILE__)
 
 directory BUILD_DIRECTORY
 directory USER_INSTALL_DIRECTORY
@@ -79,6 +80,20 @@ task :cleanup do
 		rm_r BUILD_DIRECTORY
 	end
 	puts "Project is clean"
+end
+
+desc "Check tests specification"
+task :check_tests => :tools do
+    sh "#{SOURCE_DIRECTORY}/bin/jasmine spec --verbose 2> /dev/null"
+end
+
+desc "Install development tools"
+task :tools => ["#{SOURCE_DIRECTORY}/bin/jasmine"]
+
+rule "#{SOURCE_DIRECTORY}/bin/jasmine" do
+    sh "mkdir -p #{SOURCE_DIRECTORY}/tools"
+    sh "curl -s https://api.github.com/repos/ptomato/jasmine-gjs/releases/latest | jq -r '.assets[] | .browser_download_url' | xargs curl -SL | tar -xJC #{SOURCE_DIRECTORY}/tools"
+    sh "cd #{SOURCE_DIRECTORY}/tools/jasmine-gjs* && ./configure --prefix=#{SOURCE_DIRECTORY} --exec-prefix=#{SOURCE_DIRECTORY} && make && make install"
 end
 
 task :default do

@@ -27,6 +27,10 @@ No clicks or key presses needed, just take a look at the top of the screen when 
 The following applications need to be installed:
 - zip
 - rake
+- tar
+- xargs
+- curl
+- jq
 
 Project can be built with Rake (http://rake.rubyforge.org/).
 To install Rake, first you need RubyGems package manager which is available via the own package manager
@@ -37,6 +41,12 @@ of the OS. Once you have that, issue the following command:
 Then `rake build` command will make the “**build/System_Monitor@bghome.gmail.com-[version].zip**” for you.
 
 To remove all generated files, use the `rake cleanup` command.
+
+## Tests
+
+Test specifications are located under the **spec** directory. The specification syntax is defined by the [Jasmine framework](https://jasmine.github.io/index.html).
+
+To check all tests, run `rake check_tests`.
 
 ## Install
 
