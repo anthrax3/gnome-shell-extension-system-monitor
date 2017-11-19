@@ -1,7 +1,6 @@
 const PopupMenu = imports.ui.popupMenu;
 const St = imports.gi.St;
 const Lang = imports.lang;
-const Main = imports.ui.main;
 
 const Me = imports.misc.extensionUtils.getCurrentExtension();
 const Util = Me.imports.util;
